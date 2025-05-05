@@ -26,15 +26,18 @@
 
       homebrew = {
           enable = true;
+          brews = [
+            "mas"
+          ];
           casks = [
-            "hammerspoon"
+            # "hammerspoon"
           ];
           masApps = {
-            "Yoink" = 457622435;
+            "MarvelSnap" = 1592081003;
           };
           # onActivation.cleanup = "zap";
-          onActivation.autoUpdate = true;
-          onActivation.upgrade = true;
+          # onActivation.autoUpdate = true;
+          # onActivation.upgrade = true;
         };
 
       fonts.packages = [
