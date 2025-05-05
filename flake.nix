@@ -6,9 +6,10 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     nix-darwin.url = "github:LnL7/nix-darwin";
     nix-darwin.inputs.nixpkgs.follows = "nixpkgs";
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
   };
 
-  outputs = inputs@{ self, nix-darwin, nixpkgs }:
+  outputs = inputs@{ self, nix-darwin, nixpkgs, nix-homebrew }:
   let
     configuration = { pkgs, ... }: {
 
@@ -22,6 +23,14 @@
           pkgs.neovim
           pkgs.obsidian
         ];
+
+      homebrew = {
+          enable = true;
+          casks = [
+            "hammerspoon"
+          ];
+          # onActivation.cleanup = "zap";
+        };
 
       fonts.packages = [
           # (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
@@ -51,7 +60,22 @@
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
     darwinConfigurations."avenger" = nix-darwin.lib.darwinSystem {
-      modules = [ configuration ];
+      modules = [ 
+          configuration 
+          nix-homebrew.darwinModules.nix-homebrew
+          {
+            nix-homebrew = {
+              enable = true;
+
+              # Apple Silicon Only
+              enableRosetta = true;
+
+              user = "user";
+
+              autoMigrate = true;
+            };
+          }
+        ];
     };
 
     # Expose the package set, including overlays, for convenience.
