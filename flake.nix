@@ -44,6 +44,11 @@
           # (pkgs.nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
         ];
 
+      system.defaults = {
+          dock.autohide = true;
+          loginwindow.GuestEnabled = false;
+        };
+
       # nix.package = pkgs.nix;
 
       # Necessary for using flakes on this system.
