@@ -1,5 +1,5 @@
 {
-  description = "Zenful Darwin system flake";
+  description = "Avenger Darwin system flake";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
@@ -39,11 +39,11 @@
   {
     # Build darwin flake using:
     # $ darwin-rebuild build --flake .#simple
-    darwinConfigurations."macbook" = nix-darwin.lib.darwinSystem {
+    darwinConfigurations."avenger" = nix-darwin.lib.darwinSystem {
       modules = [ configuration ];
     };
 
     # Expose the package set, including overlays, for convenience.
-    darwinPackages = self.darwinConfigurations."macbook".pkgs;
+    darwinPackages = self.darwinConfigurations."avenger".pkgs;
   };
 }
